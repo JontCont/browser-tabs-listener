@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>瀏覽器分頁監聽器 - 測試頁面</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .card {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 10px 5px;
+        }
+        .btn:hover {
+            background: #0056b3;
+        }
+        .btn-success { background: #28a745; }
+        .btn-success:hover { background: #1e7e34; }
+        .btn-warning { background: #ffc107; color: #212529; }
+        .btn-warning:hover { background: #e0a800; }
+    </style>
+</head>
+<body>
+    <h1>🔍 瀏覽器分頁監聽器測試頁面</h1>
+    
+    <div class="card">
+        <h2>快速開始</h2>
+        <p>歡迎使用瀏覽器分頁監聽器！點擊下面的連結開始測試各項功能。</p>
+        <a href="index.html" class="btn btn-success">🚀 開啟主頁面</a>
+        <a href="index.html" target="_blank" class="btn btn-warning">📂 在新分頁開啟</a>
+    </div>
+
+    <div class="card">
+        <h2>📋 測試清單</h2>
+        <ol>
+            <li><strong>分頁切換測試</strong>: 開啟主頁面後，切換到其他分頁再回來</li>
+            <li><strong>可見性測試</strong>: 最小化瀏覽器視窗或切換應用程式</li>
+            <li><strong>新分頁測試</strong>: 點擊「在新分頁開啟」按鈕</li>
+            <li><strong>重複分頁測試</strong>: 複製 URL 並快速開啟新分頁</li>
+            <li><strong>統計功能測試</strong>: 觀察各項統計數據的變化</li>
+        </ol>
+    </div>
+
+    <div class="card">
+        <h2>📖 說明文件</h2>
+        <ul>
+            <li><a href="README.md" target="_blank">README.md - 專案概述</a></li>
+            <li><a href="DEMO.md" target="_blank">DEMO.md - 詳細功能說明</a></li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>🌐 瀏覽器兼容性</h2>
+        <p>本專案支援所有現代瀏覽器，包括：</p>
+        <ul>
+            <li>Chrome 14+</li>
+            <li>Firefox 10+</li>
+            <li>Safari 7+</li>
+            <li>Edge (所有版本)</li>
+            <li>Opera 15+</li>
+        </ul>
+    </div>
+
+    <script>
+        // 記錄測試頁面的載入
+        console.log('測試頁面已載入');
+        
+        // 檢測瀏覽器支援
+        const features = {
+            'localStorage': typeof(Storage) !== 'undefined',
+            'visibilityAPI': typeof document.visibilityState !== 'undefined',
+            'focus': 'hasFocus' in document,
+            'performance': 'performance' in window
+        };
+        
+        console.log('瀏覽器功能支援:', features);
+        
+        // 如果所有功能都支援，顯示成功訊息
+        const allSupported = Object.values(features).every(Boolean);
+        if (allSupported) {
+            console.log('✅ 你的瀏覽器支援所有功能！');
+        } else {
+            console.warn('⚠️ 某些功能在你的瀏覽器中可能無法正常工作');
+        }
+    </script>
+</body>
+</html>

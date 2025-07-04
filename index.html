@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>瀏覽器分頁監聽器</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔍 瀏覽器分頁監聽器</h1>
+            <p>檢測分頁狀態變化、新分頁開啟和重複分頁</p>
+        </header>
+
+        <main>
+            <!-- 分頁狀態顯示 -->
+            <section class="status-panel">
+                <h2>📊 當前狀態</h2>
+                <div class="status-grid">
+                    <div class="status-item">
+                        <span class="label">分頁狀態:</span>
+                        <span id="tab-status" class="value">活躍</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="label">可見性:</span>
+                        <span id="visibility-status" class="value">可見</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="label">開啟方式:</span>
+                        <span id="opener-status" class="value">檢測中...</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="label">重複分頁:</span>
+                        <span id="duplicate-status" class="value">檢測中...</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 統計資訊 -->
+            <section class="stats-panel">
+                <h2>📈 統計資訊</h2>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-number" id="focus-changes">0</div>
+                        <div class="stat-label">焦點變化次數</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" id="visibility-changes">0</div>
+                        <div class="stat-label">可見性變化次數</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" id="active-time">0</div>
+                        <div class="stat-label">活躍時間 (秒)</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" id="total-time">0</div>
+                        <div class="stat-label">總停留時間 (秒)</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 事件日誌 -->
+            <section class="log-panel">
+                <h2>📝 事件日誌</h2>
+                <div class="log-controls">
+                    <button id="clear-log">清除日誌</button>
+                    <button id="export-log">匯出日誌</button>
+                </div>
+                <div id="event-log" class="log-container">
+                    <!-- 事件日誌將在這裡顯示 -->
+                </div>
+            </section>
+
+            <!-- 測試區域 -->
+            <section class="test-panel">
+                <h2>🧪 測試功能</h2>
+                <div class="test-buttons">
+                    <button onclick="openNewTab()">在新分頁開啟當前頁面</button>
+                    <button onclick="triggerFocusChange()">模擬焦點變化</button>
+                    <button onclick="showPageInfo()">顯示頁面資訊</button>
+                    <button onclick="resetStats()">重置統計</button>
+                </div>
+                <div id="test-output" class="test-output">
+                    <!-- 測試輸出將在這裡顯示 -->
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; 2025 瀏覽器分頁監聽器 - 純網頁端實現</p>
+        </footer>
+    </div>
+
+    <!-- JavaScript 檔案 -->
+    <script src="js/utils.js"></script>
+    <script src="js/duplicate-detector.js"></script>
+    <script src="js/stats.js"></script>
+    <script src="js/tab-listener.js"></script>
+
+    <script>
+        // 初始化應用程式
+        window.addEventListener('DOMContentLoaded', () => {
+            initTabListener();
+            initDuplicateDetector();
+            initStats();
+            
+            // 記錄頁面載入事件
+            logEvent('頁面已載入', 'info');
+        });
+
+        // 測試功能
+        function openNewTab() {
+            const url = window.location.href;
+            window.open(url, '_blank');
+            logEvent('在新分頁開啟當前頁面', 'action');
+        }
+
+        function triggerFocusChange() {
+            // 模擬焦點變化（僅供演示）
+            window.blur();
+            setTimeout(() => window.focus(), 1000);
+            logEvent('模擬焦點變化', 'action');
+        }
+
+        function showPageInfo() {
+            const info = {
+                'URL': window.location.href,
+                'Referrer': document.referrer || '無',
+                'User Agent': navigator.userAgent,
+                'Screen Resolution': `${screen.width}x${screen.height}`,
+                'Viewport Size': `${window.innerWidth}x${window.innerHeight}`
+            };
+            
+            let output = '<h3>頁面資訊:</h3><ul>';
+            for (const [key, value] of Object.entries(info)) {
+                output += `<li><strong>${key}:</strong> ${value}</li>`;
+            }
+            output += '</ul>';
+            
+            document.getElementById('test-output').innerHTML = output;
+            logEvent('顯示頁面資訊', 'action');
+        }
+
+        function resetStats() {
+            if (confirm('確定要重置所有統計資料嗎？')) {
+                resetAllStats();
+                document.getElementById('event-log').innerHTML = '';
+                document.getElementById('test-output').innerHTML = '';
+                logEvent('統計資料已重置', 'action');
+            }
+        }
+    </script>
+</body>
+</html>
