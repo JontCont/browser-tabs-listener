@@ -79,6 +79,7 @@
                     <button onclick="openNewTab()">在新分頁開啟當前頁面</button>
                     <button onclick="triggerFocusChange()">模擬焦點變化</button>
                     <button onclick="showPageInfo()">顯示頁面資訊</button>
+                    <button onclick="showTabInfo()">顯示分頁檢測資訊</button>
                     <button onclick="resetStats()">重置統計</button>
                 </div>
                 <div id="test-output" class="test-output">
@@ -140,6 +141,40 @@
             
             document.getElementById('test-output').innerHTML = output;
             logEvent('顯示頁面資訊', 'action');
+        }
+
+        function showTabInfo() {
+            if (duplicateDetector) {
+                const tabInfo = duplicateDetector.getTabInfo();
+                
+                let output = '<h3>分頁檢測資訊:</h3><ul>';
+                output += `<li><strong>分頁 ID:</strong> ${tabInfo.tabId}</li>`;
+                output += `<li><strong>是否重複分頁:</strong> ${tabInfo.isDuplicate ? '是' : '否'}</li>`;
+                output += `<li><strong>是否原始分頁:</strong> ${tabInfo.isOriginalTab ? '是' : '否'}</li>`;
+                output += `<li><strong>相同 URL 分頁數:</strong> ${tabInfo.sameUrlTabs}</li>`;
+                output += `<li><strong>總分頁數:</strong> ${tabInfo.tabCount}</li>`;
+                output += `<li><strong>活躍實例數:</strong> ${tabInfo.activeInstances}</li>`;
+                output += `<li><strong>會話 ID:</strong> ${tabInfo.sessionId}</li>`;
+                output += `<li><strong>Broadcast Channel 支援:</strong> ${tabInfo.broadcastSupported ? '是' : '否'}</li>`;
+                
+                if (tabInfo.instances.length > 0) {
+                    output += '<li><strong>活躍分頁列表:</strong><ul>';
+                    tabInfo.instances.forEach(instance => {
+                        const openTime = new Date(instance.openedAt).toLocaleTimeString();
+                        const lastSeen = new Date(instance.lastSeen).toLocaleTimeString();
+                        const isCurrent = instance.isCurrentTab ? ' (當前分頁)' : '';
+                        output += `<li>ID: ${instance.tabId.substring(0, 8)}... - 開啟: ${openTime} - 最後活動: ${lastSeen}${isCurrent}</li>`;
+                    });
+                    output += '</ul></li>';
+                }
+                
+                output += '</ul>';
+                
+                document.getElementById('test-output').innerHTML = output;
+                logEvent('顯示分頁檢測資訊', 'action');
+            } else {
+                document.getElementById('test-output').innerHTML = '<p>分頁檢測器尚未初始化</p>';
+            }
         }
 
         function resetStats() {

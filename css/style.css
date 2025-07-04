@@ -124,8 +124,11 @@ section h2 {
 .value.visible { background: #dbeafe; color: var(--primary-color); }
 .value.hidden { background: #f3f4f6; color: var(--text-secondary); }
 .value.new-tab { background: #e0e7ff; color: #6366f1; }
-.value.link-navigation { background: #ecfdf5; color: var(--success-color); }
-.value.direct-access { background: #f0f9ff; color: var(--primary-color); }
+.value.duplicate-tab { background: #fef2f2; color: var(--error-color); }
+.value.internal-navigation { background: #ecfdf5; color: var(--success-color); }
+.value.external-link { background: #fff7ed; color: #ea580c; }
+.value.bookmark-access { background: #f0f9ff; color: var(--primary-color); }
+.value.direct-access { background: #f8fafc; color: var(--text-secondary); }
 .value.duplicate { background: #fef2f2; color: var(--error-color); }
 .value.normal { background: #f0fdf4; color: var(--success-color); }
 
